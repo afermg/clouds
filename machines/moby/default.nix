@@ -80,14 +80,8 @@
 
   # Default system wide packages
   environment.systemPackages = with pkgs; [
-    vim
-    dive
-    podman-tui
-    docker-compose
-    gnomeExtensions.forge
-    gnomeExtensions.blur-my-shell
-    gnomeExtensions.burn-my-windows
-    gnomeExtensions.appindicator
+      gnomeExtensions.forge
+      gnomeExtensions.appindicator
   ];
   environment.shells = [ pkgs.zsh pkgs.fish ];
   programs.zsh.enable = true;
@@ -112,6 +106,16 @@
     ];
   };
 
+  users.users.llanos = {
+    shell = pkgs.zsh;
+    isNormalUser = true;
+    # passwordFile = config.age.secrets.karkinos_pass.path;
+    description = "Paula Llanos";
+    extraGroups = [ "networkmanager" "wheel" "libvirtd" "qemu-libvirtd" "input"];
+    openssh.authorizedKeys.keyFiles = [
+      ../../homes/llanos/id_rsa.pub
+    ];
+  };
   # Enable home-manager for users
   home-manager.useGlobalPkgs = true;
   home-manager.useUserPackages = true;
