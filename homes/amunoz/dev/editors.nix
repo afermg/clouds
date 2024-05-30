@@ -3,6 +3,8 @@
   home.packages = with pkgs; [
 
     gawk
+    gnumake # Necessary for emacs' vterm
+    libtool # Necessary for emacs' vterm
     gnused
     gnutar
     wget
