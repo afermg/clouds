@@ -3,9 +3,9 @@
   imports = [
     ./home.nix
     ./dev
-    ./secrets
+#    ./secrets
     ./browsers
-    ./network
+#    ./network
     ./misc
   ];
 }
