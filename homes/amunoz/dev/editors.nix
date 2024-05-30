@@ -48,6 +48,7 @@
     nix-index
     nix-search-cli
 
+    magic-wormhole # easy ftp sharing
 ];
 
   programs.direnv = {
