@@ -14,7 +14,7 @@
     inputs.hardware.nixosModules.common-pc-ssd
     inputs.home-manager.nixosModule
     inputs.nix-ld.nixosModules.nix-ld
-    outputs.nixosModules.sunshine
+    # outputs.nixosModules.sunshine
     # Import your generated (nixos-generate-config) hardware configuration
     ./hardware-configuration.nix
 
@@ -35,6 +35,7 @@
   programs.nix-ld.dev.enable = true;
   # Enable the X11 windowing system.
   services.xserver.enable = true;
+  services.xserver.displayManager.gdm.autoSuspend = false;
 
   # Enable the GNOME Desktop Environment.
   services.xserver.displayManager.gdm.enable = true;
