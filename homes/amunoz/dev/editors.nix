@@ -2,23 +2,24 @@
 {
   home.packages = with pkgs; [
 
-  gawk
-  gnused
-  gnutar
-  wget
-  ps
-  atuin
-  bc
-  fzf
-  jq
-  mermaid-cli
-  parallel
-  direnv
-  luajitPackages.fennel
-  bc
-  rsync
-  monolith
-  tldr
+    gawk
+    gnused
+    gnutar
+    wget
+    ps
+    atuin
+    bc
+    fzf
+    jq
+    mermaid-cli
+    parallel
+    direnv
+    luajitPackages.fennel
+    nerdfonts
+    bc
+    rsync
+    monolith
+    tldr
     xclip
     ripgrep
     cargo
@@ -51,4 +52,14 @@
     enable = true;
     nix-direnv.enable = true;
   };
+
+   xdg = {
+
+       enable = true;
+       configFile."doom"= {
+     	source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/clouds/homes/amunoz/config/doom";
+        recursive = true;
+   };
+
+   };
 }

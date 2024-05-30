@@ -21,7 +21,7 @@
 #      "blur-my-shell@aunetx"
 #      "burn-my-windows@schneegans.github.com"
       "forge@jmmaranan.com"
-#      "appindicatorsupport@rgcjonas.gmail.com"
+      "appindicatorsupport@rgcjonas.gmail.com"
     ];
   };
   programs.home-manager.enable = true;
