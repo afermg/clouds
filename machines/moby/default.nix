@@ -34,15 +34,16 @@
   # FHS
   programs.nix-ld.dev.enable = true;
   # Enable the X11 windowing system.
-  services.xserver.enable = true;
-  services.xserver.displayManager.gdm.autoSuspend = false;
-
+  services.xserver = {
+    enable = true;
+    layout = "us";
   # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
-
-  # Enable sunshine
- #  modules.services.sunshine.enable = true;
+    desktopManager.gnome.enable = true;
+    displayManager.gdm = {
+      enable = true;
+      autoSuspend = false;
+    };
+  };
 
   nixpkgs = {
     # You can add overlays here
@@ -88,11 +89,16 @@
   programs.zsh.enable = true;
   programs.fish.enable = true;
 
-  # Netowrking
+  # Networking
   networking.hostName = "gpa85-cad";
   # networking.bridges.br0.interfaces = [ "enp2s0" "wlp131s0" ];
   services.tailscale.enable = true;
   services.syncthing.enable = true;
+
+  services.emacs = {
+    enable = true;
+    package = (pkgs.emacs29.override { withImageMagick = true; });
+  };
   
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.amunoz = {
@@ -102,7 +108,9 @@
     description = "Alan Munoz";
     extraGroups = [ "networkmanager" "wheel" "libvirtd" "qemu-libvirtd" "input"];
     openssh.authorizedKeys.keyFiles = [
-      ../../homes/amunoz/id_rsa.pub 
+      ../../homes/amunoz/network/pub/id_rsa.pub
+      ../../homes/amunoz/network/pub/dgx.pub
+      ../../homes/amunoz/network/pub/main.pub
      # ../../homes/amunoz/id_ed25519.pub 
     ];
   };
