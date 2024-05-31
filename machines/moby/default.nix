@@ -135,6 +135,12 @@
      ../../homes/amunoz/moby.nix
     ];
   };
+  home-manager.users.llanos = {
+    imports = [
+     inputs.agenix.homeManagerModules.default
+     ../../homes/llanos/moby.nix
+    ];
+  };
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "23.11";
