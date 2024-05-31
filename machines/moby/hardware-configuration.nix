@@ -27,6 +27,15 @@
     [ { device = "/dev/disk/by-uuid/31e6f81a-6fcd-4732-887c-dd57df896faf"; }
     ];
 
+  # Secondary internal hard drive (4TB). For fast-access data
+  fileSystems."/ssd" =
+    { device = "/dev/nvme1n1";
+      fsType = "ext4";
+      autoFormat = true;
+    };
+
+  # Additional spinning-disk drives
+
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's
   # still possible to use this option, but it's recommended to use it in conjunction
