@@ -2,6 +2,12 @@
 
 {
 
+  home.packages = with pkgs; [
+    screen
+    git
+    tldr
+    killall
+];
   programs.git = {
     enable = true;
     userName = "PaulaLlanos";
