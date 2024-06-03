@@ -3,18 +3,22 @@
 
   inputs = {
     # Nixpkgs
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
     # nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     # nixos-nvidia-vgpu = {
     #   url = "github:Yeshey/nixos-nvidia-vgpu/535.129";
     #   # inputs.nixpkgs.follows = "nixpkgs"; # doesn't work with latest nixpkgs rn
     # };
 
+
     # Home manager
     home-manager = {
-      url = "github:nix-community/home-manager/release-23.11";
+      url = "github:nix-community/home-manager/release-24.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # VSCode server
+    vscode-server.url = "github:nix-community/nixos-vscode-server";
 
     agenix.url = "github:ryantm/agenix";
 

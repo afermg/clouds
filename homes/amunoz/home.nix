@@ -9,7 +9,7 @@
   home.username = "amunoz";
   home.homeDirectory = "/home/amunoz";
 
-  home.stateVersion = "23.11";
+  home.stateVersion = "24.05";
 
   dconf.settings = {
    "org/gnome/desktop/input-sources" = {
