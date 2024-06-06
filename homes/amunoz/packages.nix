@@ -16,6 +16,7 @@
     ripgrep # faster grep in rust
     fd # faster find
     difftastic # better diffs
+    dua # better du
 
     # langs
     cargo # rust packages
