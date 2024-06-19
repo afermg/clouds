@@ -180,10 +180,10 @@
        ;;plantuml          ; diagrams for confusing people more
        ;;purescript        ; javascript, but functional
        (python
-        +lsp
-        ;; +pyright
-        ;; +pyenv
-        +poetry)
+        +lsp)
+       ;; +pyright
+       ;; +pyenv
+       ;; +poetry)
        ;; +conda)
 
 

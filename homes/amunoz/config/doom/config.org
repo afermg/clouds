@@ -332,6 +332,14 @@ Ignore my git in the $HOME Folder
 
 #+end_src
 
+** Envrc
+#+begin_src elisp :tangle yes
+(require 'envrc)
+(add-hook! (add-hook 'change-major-mode-after-body-hook 'envrc-mode))
+#+end_src
+
+#+RESULTS:
+
 * Coding
 ** Tree-sitter
 #+begin_src emacs-lisp :tangle yes
@@ -342,43 +350,30 @@ Ignore my git in the $HOME Folder
 : t
 
 ** Python
-*** poetry
-#+begin_src emacs-lisp :tangle yes
-(setq poetry-tracking-strategy 'projectile)
-(setq poetry-tracking-mode nil)
-#+end_src
-
-#+RESULTS:
 
 *** Venv
+Python interpreter, completion and Inferior buferr settings
 #+begin_src emacs-lisp :tangle yes
-;;; Python settings
 (after! python
-  ;; (setenv "PYTHONPATH" "/home/alan/Documents/sync/libs/baby/python:/home/alan/Documents/sync/libs/pipeline-core:/home/alan/Documents/sync/libs/extraction:/home/alan/Documents/sync/libs/postprocessor")
- ; (setq python-shell-interpreter "ipython3"
-  (setq python-shell-interpreter "jupyter"
+(setq python-shell-interpreter "jupyter"
         python-shell-interpreter-args "console --simple-prompt"
         python-shell-prompt-detect-failure-warning nil)
-;; (setq python-shell-completion-native-disabled-interpreters '("python"))
-  (add-to-list 'python-shell-completion-native-disabled-interpreters
-               "jupyter"))
-  ;;              "python"))
+(setq python-shell-completion-native-disabled-interpreters `(,@python-shell-completion-native-disabled-interpreters "jupyter"))
 (add-hook 'python-mode-hook
           (lambda ()
             (setq-local python-shell-buffer-name
                         (format "Python %s"
-                            (cadr (reverse (file-name-split (doom-modeline--project-root)))))))
-)
+                            (cadr (reverse (file-name-split (doom-modeline--project-root)))))))))
+
 #+end_src
 
 #+RESULTS:
 | doom--setq-tab-width-for-python-mode-h | (lambda nil (setq-local python-shell-buffer-name (format Python %s (cadr (reverse (file-name-split (doom-modeline--project-root))))))) | er/add-python-mode-expansions | code-cells-mode-maybe | poetry-tracking-mode | +python-use-correct-flycheck-executables-h | evil-collection-python-set-evil-shift-width | doom-modeline-env-setup-python | (lambda nil (set (make-local-variable 'python-shell-buffer-name) (format Python %s (car (cdr (reverse (file-name-split (doom-modeline--project-root)))))))) | pipenv-mode | +lookup-init--set-python-mode |
 
-Functions used for code-cells funcitonality
+Functions used for code-cells functionality
 #+begin_src emacs-lisp :tangle yes
 (after! python
-  ;; Code-cells mode for jupytext
-  (add-hook 'python-mode-hook 'code-cells-mode-maybe)
+  (add-hook! python-mode (add-hook 'python-mode-hook 'code-cells-mode-maybe))
   (add-hook! python-mode (add-hook 'before-save-hook 'lsp-organize-imports nil t))
   (add-hook! python-mode (add-hook 'before-save-hook 'lsp-format-buffer nil t))
 
@@ -396,14 +391,7 @@ Functions used for code-cells funcitonality
    "Check if the line immediately before the pointer is empty."
    (save-excursion (forward-line -1)
                    (current-line-empty-p))))
-
-
-
-
 #+end_src
-
-#+RESULTS:
-: line-before-pointer-empty-p
 
 *** Debug
 **** Realgud
@@ -454,7 +442,6 @@ term-color-blue
 term-color-purple
 term-color-darkgoldenrod
 term-color-ivory4]))
-
 #+end_src
 
 #+RESULTS:
@@ -487,6 +474,9 @@ Taken from elpy-shell-send-current-statement"
     (python-nav-forward-statement))
 
 #+end_src
+
+#+RESULTS:
+: python-shell-send-current-statement
 
 *** Custom
 #+begin_src emacs-lisp :tangle yes
@@ -542,35 +532,33 @@ Taken from elpy-shell-send-current-statement"
 #+RESULTS:
 : replace-pylambda-with-def
 
-*** Pyenv :review:
+*** Code-cells
 
-#+begin_src emacs-lisp :tangle yes
-(after! pyenv
-(setq pyenv-exec-shell  "fish")
-(defun projectile-pyenv-mode-set ()
-"Set pyenv version matching project name."
-(let ((project (projectile-project-name)))
-(if (member project (pyenv-mode-versions))
-(pyenv-mode-set project)
-(pyenv-mode-unset))))
+**** Python
+#+begin_src elisp :tangle yes
+   (map! :map python-mode-map
+         :localleader
+         :n "z" #'run-python
+         "w" #'venv-workon-and-update
+         "y" #'realgud:pdb
+         "f" #'realgud-pdb-pytest
 
-(add-hook 'projectile-after-switch-project-hook 'projectile-pyenv-mode-set)
+         (:desc "send to REPL" :prefix "s"
+                "r" #'python-shell-send-region-or-line
+                "b" #'python-shell-send-buffer
+                "d" #'python-shell-send-defun))
 
-(defun pyenv-mode-set-fix (version)
-"Custom function because normal pyenv-mode-set wasn't working on Arran.
-Set python shell version and ensure pyenv changes."
-(interactive (list (pyenv-mode-read-version))
-(pythonic-activate "PYENV_VERSION" version))
-(setenv "PYENV_VERSION" version)
-(setq +pyenv--version version)) ;; This ensures pyenv changes
-
-
-(map! :map pyenv-mode-map
-:n "C-c C-s" #'pyenv-mode-set-fix)
-)
+   (defun python-shell-send-region-or-line nil
+     "Sends from python-mode buffer to a python shell, intelligently."
+     (interactive)
+     (cond ((region-active-p)
+            (setq deactivate-mark t)
+            (python-shell-send-region (region-beginning) (region-end)))
+           (t (python-shell-send-current-statement))))
 #+end_src
 
-*** Code-cells
+#+RESULTS:
+: python-shell-send-region-or-line
 
 #+begin_src emacs-lisp :tangle yes
 
@@ -633,29 +621,6 @@ Open after list
 
 #+RESULTS:
 : t
-
-**** Python
-#+begin_src elisp :tangle yes
-   (map! :map python-mode-map
-         :localleader
-         :n "z" #'run-python
-         "w" #'venv-workon-and-update
-         "y" #'realgud:pdb
-         "f" #'realgud-pdb-pytest
-
-         (:desc "send to REPL" :prefix "s"
-                "r" #'python-shell-send-region-or-line
-                "b" #'python-shell-send-buffer
-                "d" #'python-shell-send-defun))
-
-   (defun python-shell-send-region-or-line nil
-     "Sends from python-mode buffer to a python shell, intelligently."
-     (interactive)
-     (cond ((region-active-p)
-            (setq deactivate-mark t)
-            (python-shell-send-region (region-beginning) (region-end)))
-           (t (python-shell-send-current-statement))))
-#+end_src
 
 ** Others
 *** Julia
@@ -1045,6 +1010,7 @@ Atom -> RSS
       '(("Emacs SE"
          "https://emacs.stackexchange.com/feeds")))
 #+end_src
+
 * Org
 ** Basic
 #+begin_src emacs-lisp :tangle yes
@@ -2307,46 +2273,11 @@ todo make automatic toplevel detection and list folders/subfolders at toplevel
 
 Copy file and line number to kill-ring
 #+begin_src emacs-lisp :tangle yes
-(after! magit
-  (defun current-repo-name ()
-    (car (last (split-string (magit-toplevel) "/") 2)))
-
-  (defun current-file-relative-to-git-toplevel ()
-    (s-replace (magit-toplevel)
-               (concat (current-repo-name) "/")
-               (buffer-file-name)))
-
-  (defun pos-to-line-string (pos)
-    (number-to-string (line-number-at-pos pos)))
-
-  (defun build-current-file-linum (START &optional END)
-    ;; Builds the expression indicating the cursor location
-    ;; Format is "<rev> <branch> <relative-folder>:<first line>(-<last line>)"
-    (concat
-     (magit-rev-abbrev (magit-rev-parse "HEAD"))
-     " "
-     (magit-name-branch "HEAD")
-     " "
-     (current-file-relative-to-git-toplevel)
-     ": "
-     (pos-to-line-string START)
-     (when END (concat "-" (pos-to-line-string END)))))
-
-  (defun yank-current-file-and-linum ()
-    ;; Copy the current buffer file (relative to the top git level) and line number or range
-    (kill-new (build-current-file-linum (point))))
-
-  (defun yank-current-file-region ()
-    ;; Copy the the current buffer file (relative to top git level) and the line number of regions
-    (interactive)
-    (message "Copied %s" (if (region-active-p)
-                             (kill-new (build-current-file-linum (region-beginning) (region-end)))
-                           (yank-current-file-and-linum)))))
-
-  ;; (map! :localleader "l" #'yank-current-file-region)
-
-
+(after! browse-at-remote
+ (setq browse-at-remote-remote-type-regexps (push '(:host "^git\\.ecdf\\.ed\\.ac\\.uk$" :type "gitlab")  browse-at-remote-remote-type-regexps)))
 #+end_src
+
+#+RESULTS:
 
 Difftastic integration
 #+begin_src emacs-lisp :tangle yes
