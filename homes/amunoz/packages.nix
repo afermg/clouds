@@ -44,7 +44,7 @@
 
     # monitor
     nvitop # top for gpus (prefered)
-    nvtop # another top for gpus
+    nvtopPackages.full # another top for gpus
     btop # nicer btop
 
     # python
