@@ -44,7 +44,7 @@
         "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
           binding = "<Super>Return"; # conflicts with forge, see  https://github.com/forge-ext/forge/issues/37
           # binding = "<Super>t";
-          command = "/usr/bin/env kitty";
+          command = "/usr/bin/env wezterm";
           name = "Terminal";
         };
         "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1" = {

@@ -9,8 +9,9 @@
     gnused # The one and only sed
     wget # fetch stuff
     ps # processes
-    killall
+    killall # kill all the processes by name
     screen
+    lsof # Files and their processes
 
     # faster/better X
     ripgrep # faster grep in rust
@@ -30,7 +31,6 @@
     rsync # sync data
     atuin # shared command history
     unzip # extract zips
-    screen
 
     # terminals
     wezterm
