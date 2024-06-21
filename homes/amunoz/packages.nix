@@ -81,6 +81,9 @@
     monolith # download whole html websites
     xclip # clipboard manipulation tool
     magic-wormhole # easy ftp sharing
+
+    # specific needs
+    haskellPackages.xml-to-json-fast
 ];
 
   programs.git = {
