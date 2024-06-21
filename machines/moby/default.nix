@@ -32,7 +32,8 @@
   ];
 
   # FHS
-  programs.nix-ld.dev.enable = true;
+  programs.nix-ld.enable = true;
+
   # Enable the X11 windowing system.
   services.xserver = {
     enable = true;
