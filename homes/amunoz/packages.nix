@@ -111,5 +111,9 @@
      	source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/clouds/homes/amunoz/config/pypoetry";
         recursive = true;
    };
+   #     configFile."ipython"= {
+   #   	source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/clouds/homes/amunoz/config/ipython";
+   #      recursive = true;
+   # };
    };
 }
