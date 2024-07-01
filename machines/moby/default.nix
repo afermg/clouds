@@ -112,34 +112,54 @@
       ../../homes/amunoz/network/pub/id_rsa.pub
       ../../homes/amunoz/network/pub/dgx.pub
       ../../homes/amunoz/network/pub/main.pub
-     # ../../homes/amunoz/id_ed25519.pub 
     ];
   };
 
   users.users.llanos = {
     shell = pkgs.zsh;
     isNormalUser = true;
-    # passwordFile = config.age.secrets.karkinos_pass.path;
     description = "Paula Llanos";
     extraGroups = [ "networkmanager" "wheel" "libvirtd" "qemu-libvirtd" "input"];
     openssh.authorizedKeys.keyFiles = [
       ../../homes/llanos/id_rsa.pub
     ];
   };
+
+  users.users.hhakem = {
+    shell = pkgs.zsh;
+    isNormalUser = true;
+    description = "Hugo Hakem";
+    extraGroups = [ "networkmanager" "wheel" "libvirtd" "qemu-libvirtd" "input"];
+    openssh.authorizedKeys.keyFiles = [
+      ../../homes/hhakem/id_rsa.pub
+    ];
+  };
+
   # Enable home-manager for users
   home-manager.useGlobalPkgs = true;
   home-manager.useUserPackages = true;
   home-manager.extraSpecialArgs = { inherit inputs outputs; };
+
+
+  # USER HOMES
   home-manager.users.amunoz = {
     imports = [
      inputs.agenix.homeManagerModules.default
      ../../homes/amunoz/moby.nix
     ];
   };
+
   home-manager.users.llanos = {
     imports = [
      inputs.agenix.homeManagerModules.default
      ../../homes/llanos/moby.nix
+    ];
+  };
+
+  home-manager.users.hhakem = {
+    imports = [
+     inputs.agenix.homeManagerModules.default
+     ../../homes/hhakem/moby.nix
     ];
   };
 

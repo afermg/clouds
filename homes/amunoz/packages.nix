@@ -10,7 +10,7 @@
     wget # fetch stuff
     ps # processes
     killall # kill all the processes by name
-    screen
+    screen # ssh in and out of a server
     lsof # Files and their processes
 
     # faster/better X
@@ -30,6 +30,7 @@
     gnutar # The one and only tar
     rsync # sync data
     atuin # shared command history
+    zip
     unzip # extract zips
 
     # terminals
