@@ -18,6 +18,8 @@
     fd # faster find
     difftastic # better diffs
     dua # better du
+    dust # interactive du in tust
+    bottom # network top
 
     # langs
     cargo # rust packages
