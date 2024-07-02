@@ -6,8 +6,8 @@
     ];
   };
 
-  home.username = "hakem";
-  home.homeDirectory = "/home/hakem";
+  home.username = "hhakem";
+  home.homeDirectory = "/home/hhakem";
 
   home.stateVersion = "23.11";
 
