@@ -25,7 +25,6 @@
     ./filesystem.nix
 
     # You can also split up your configuration and import pieces of it here:
-    ../common/bootloader.nix
     ../common/networking.nix
     ../common/printing.nix
     ../common/gpu/nvidia.nix
@@ -99,6 +98,7 @@
 
   # Networking
   networking.hostName = "gpa85-cad";
+  networking.hostId = "5a08e8de";
   # networking.bridges.br0.interfaces = [ "enp2s0" "wlp131s0" ];
   services.tailscale.enable = true;
   services.syncthing.enable = true;
