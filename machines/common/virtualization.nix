@@ -35,7 +35,6 @@
   '';
 
 
-  boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.kernelParams = [ "amd_iommu=on"];
   boot.kernelModules = [ "kvm-amd" ];
 
