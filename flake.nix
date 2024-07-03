@@ -10,6 +10,9 @@
     #   # inputs.nixpkgs.follows = "nixpkgs"; # doesn't work with latest nixpkgs rn
     # };
 
+    # disko
+    disko.url = "github:nix-community/disko";
+    disko.inputs.nixpkgs.follows = "nixpkgs";
 
     # Home manager
     home-manager = {

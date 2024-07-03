@@ -13,27 +13,6 @@
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
 
-  fileSystems."/" =
-    { device = "/dev/disk/by-uuid/db6ee62a-bc8e-47ce-b45e-7f854e473dec";
-      fsType = "ext4";
-    };
-
-  fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/34D1-13AD";
-      fsType = "vfat";
-    };
-
-  swapDevices =
-    [ { device = "/dev/disk/by-uuid/31e6f81a-6fcd-4732-887c-dd57df896faf"; }
-    ];
-
-  # Secondary internal hard drive (4TB). For fast-access data
-  fileSystems."/ssd" =
-    { device = "/dev/nvme1n1";
-      fsType = "ext4";
-      autoFormat = true;
-    };
-
   # Additional spinning-disk drives
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking

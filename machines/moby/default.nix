@@ -16,7 +16,13 @@
     inputs.nix-ld.nixosModules.nix-ld
     # outputs.nixosModules.sunshine
     # Import your generated (nixos-generate-config) hardware configuration
+
+    # Disko configuration
+    inputs.disko.nixosModules.disko
+    ./disko.nix
+    # Path to make boot work with zstore pool
     ./hardware-configuration.nix
+    ./filesystem.nix
 
     # You can also split up your configuration and import pieces of it here:
     ../common/bootloader.nix
@@ -29,6 +35,7 @@
     ../common/input_device.nix
     ../common/ssh.nix
     ../common/us_eng.nix
+    ../common/zfs.nix
   ];
 
   # FHS
