@@ -112,7 +112,7 @@
   users.users.amunoz = {
     shell = pkgs.fish;
     isNormalUser = true;
-    # passwordFile = config.age.secrets.karkinos_pass.path;
+    initialHashedPassword = “changeme”;
     description = "Alan Munoz";
     extraGroups = [ "networkmanager" "wheel" "libvirtd" "qemu-libvirtd" "input"];
     openssh.authorizedKeys.keyFiles = [
