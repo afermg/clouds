@@ -110,9 +110,9 @@
   
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.amunoz = {
-    shell = pkgs.fish;
+    shell = pkgs.zsh;
     isNormalUser = true;
-    initialHashedPassword = “changeme”;
+    initialPassword = "password";
     description = "Alan Munoz";
     extraGroups = [ "networkmanager" "wheel" "libvirtd" "qemu-libvirtd" "input"];
     openssh.authorizedKeys.keyFiles = [
