@@ -50,6 +50,25 @@
       enable = true;
       autoSuspend = false;
     };
+    # This is necessary for no-autosuspend to work
+    # https://discourse.nixos.org/t/why-is-my-new-nixos-install-suspending/19500
+  #security.polkit.extraConfig = ''
+  #  polkit.addRule(function(action, subject) {
+  #      if (action.id == "org.freedesktop.login1.suspend" ||
+  #          action.id == "org.freedesktop.login1.suspend-multiple-sessions" ||
+  #          action.id == "org.freedesktop.login1.hibernate" ||
+  #          action.id == "org.freedesktop.login1.hibernate-multiple-sessions")
+  #      {
+  #          return polkit.Result.NO;
+  #      }
+  #  });
+  #'';
+
+#xrandrHeads = [
+#   { monitorConfig = ''Option "Rotate" "right"''; output = "DP-4"; }
+#   { monitorConfig = ''Option "Rotate" "left"''; output = "DP-3"; }
+#];
+
   };
 
   nixpkgs = {
@@ -87,11 +106,30 @@
     auto-optimise-store = true;
   };
 
+  fonts.fonts = with pkgs; [
+    iosevka
+    emacs-all-the-icons-fonts
+    font-awesome
+    noto-fonts
+    noto-fonts-emoji
+    noto-fonts-cjk
+    noto-fonts-emoji
+    liberation_ttf
+    fira-code
+    fira-code-symbols
+    jetbrains-mono
+    mplus-outline-fonts.githubRelease
+    dina-font
+    proggyfonts
+    nerdfonts
+  ];
+
   # Default system wide packages
   environment.systemPackages = with pkgs; [
       gnomeExtensions.forge
       gnomeExtensions.appindicator
   ];
+
   environment.shells = [ pkgs.zsh pkgs.fish ];
   programs.zsh.enable = true;
   programs.fish.enable = true;
@@ -105,12 +143,12 @@
 
   services.emacs = {
     enable = true;
-    package = (pkgs.emacs29.override { withImageMagick = true; });
+    package = (pkgs.emacs29.override { withImageMagick = true; withXwidgets = true; withGTK3 = true; });
   };
   
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.amunoz = {
-    shell = pkgs.zsh;
+    shell = pkgs.fish;
     isNormalUser = true;
     initialPassword = "password";
     description = "Alan Munoz";
@@ -123,7 +161,7 @@
   };
 
   users.users.llanos = {
-    shell = pkgs.zsh;
+    shell = pkgs.fish;
     isNormalUser = true;
     description = "Paula Llanos";
     extraGroups = [ "networkmanager" "wheel" "libvirtd" "qemu-libvirtd" "input"];

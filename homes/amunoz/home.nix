@@ -12,6 +12,9 @@
   home.stateVersion = "24.05";
 
   dconf.settings = {
+  "org/gnome/settings-daemon/plugins/power" = {
+    sleep-inactive-ac-type = "nothing";
+    };
    "org/gnome/desktop/input-sources" = {
         xkb-options = ["caps:swapescape"];
       };
@@ -50,6 +53,11 @@
         "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1" = {
           binding = "<Super>e";
           command = "/usr/bin/env emacsclient -c -a emacs";
+          name = "Emacs";
+        };
+        "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2" = {
+          binding = "<Super><Shift>Return";
+          command = "firefox";
           name = "Emacs";
         };
         "org/gnome/settings-daemon/plugins/media-keys".custom-keybindings = [
