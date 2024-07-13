@@ -42,8 +42,10 @@
     fishPlugins.async-prompt
     fishPlugins.pure
     fishPlugins.autopair
+
     # fonts
     nerdfonts # nice fonts, used in doom emacs
+    emacs-all-the-icons-fonts
 
     # monitor
     nvitop # top for gpus (prefered)
@@ -59,6 +61,8 @@
 
     # writing
     texliveFull # all the stuff for tex writing  # TODO try to reduce footprint
+    (aspellWithDicts (dicts: with dicts; [ en en-computers en-science ]))
+    pandoc
 
     # convenience
     gnuplot # no-fuss plotting
@@ -78,12 +82,24 @@
     # nix
     nix-index # locate packages that provide a certain file
     nix-search-cli # find nix packages
+    nixfmt-rfc-style
 
     # testing
     luajitPackages.fennel # lua in fennel
     monolith # download whole html websites
     xclip # clipboard manipulation tool
     magic-wormhole # easy ftp sharing
+
+    # AI
+    openai-whisper-cpp
+    ollama
+    piper-tts
+
+    # LSP
+    nil
+
+    # docs
+    pdftk
 
     # specific needs
     haskellPackages.xml-to-json-fast
