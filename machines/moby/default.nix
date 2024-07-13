@@ -43,8 +43,8 @@
   # Enable the X11 windowing system.
   services.xserver = {
     enable = true;
-    layout = "us";
-  # Enable the GNOME Desktop Environment.
+    xkb.layout = "us";
+    # Enable the GNOME Desktop Environment.
     desktopManager.gnome.enable = true;
     displayManager.gdm = {
       enable = true;
@@ -52,22 +52,22 @@
     };
     # This is necessary for no-autosuspend to work
     # https://discourse.nixos.org/t/why-is-my-new-nixos-install-suspending/19500
-  #security.polkit.extraConfig = ''
-  #  polkit.addRule(function(action, subject) {
-  #      if (action.id == "org.freedesktop.login1.suspend" ||
-  #          action.id == "org.freedesktop.login1.suspend-multiple-sessions" ||
-  #          action.id == "org.freedesktop.login1.hibernate" ||
-  #          action.id == "org.freedesktop.login1.hibernate-multiple-sessions")
-  #      {
-  #          return polkit.Result.NO;
-  #      }
-  #  });
-  #'';
+    #security.polkit.extraConfig = ''
+    #  polkit.addRule(function(action, subject) {
+    #      if (action.id == "org.freedesktop.login1.suspend" ||
+    #          action.id == "org.freedesktop.login1.suspend-multiple-sessions" ||
+    #          action.id == "org.freedesktop.login1.hibernate" ||
+    #          action.id == "org.freedesktop.login1.hibernate-multiple-sessions")
+    #      {
+    #          return polkit.Result.NO;
+    #      }
+    #  });
+    #'';
 
-#xrandrHeads = [
-#   { monitorConfig = ''Option "Rotate" "right"''; output = "DP-4"; }
-#   { monitorConfig = ''Option "Rotate" "left"''; output = "DP-3"; }
-#];
+    #xrandrHeads = [
+    #   { monitorConfig = ''Option "Rotate" "right"''; output = "DP-4"; }
+    #   { monitorConfig = ''Option "Rotate" "left"''; output = "DP-3"; }
+    #];
 
   };
 
@@ -106,7 +106,7 @@
     auto-optimise-store = true;
   };
 
-  fonts.fonts = with pkgs; [
+  fonts.packages = with pkgs; [
     iosevka
     emacs-all-the-icons-fonts
     font-awesome

@@ -33,8 +33,10 @@
         persistencedSha256 = "sha256-d0Q3Lk80JqkS1B54Mahu2yY/WocOqFFbZVBh+ToGhaE=";
 
  };
-};
     };
+
+    nvidia-container-toolkit.enable = true;
+  };
 
   # Nvidia and Cuda support
   services.xserver.videoDrivers = ["nvidia"];

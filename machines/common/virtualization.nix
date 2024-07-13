@@ -22,7 +22,7 @@
     oci-containers.backend = "podman";
     podman = {
       enable = true;
-      enableNvidia = true;
+      # enableNvidia = true;
       dockerCompat = true;
       defaultNetwork.settings.dns_enabled = true;
     };
