@@ -184,6 +184,7 @@
   home-manager.useGlobalPkgs = true;
   home-manager.useUserPackages = true;
   home-manager.extraSpecialArgs = { inherit inputs outputs; };
+  home-manager.backupFileExtension = "bak";
 
 
   # USER HOMES
