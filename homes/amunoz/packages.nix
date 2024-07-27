@@ -1,141 +1,162 @@
 { pkgs, config, inputs, ...}:
 {
-  home.packages = with pkgs; [
+  home.packages = let 
+    zlib12 = (pkgs.zlib.overrideAttrs(p: {
+      src = let
+        version ="1.2.13";
+      in
+        pkgs.fetchurl {
+          urls = [
+            "https://github.com/madler/zlib/releases/download/v${version}/zlib-${version}.tar.gz"
+            "https://www.zlib.net/fossils/zlib-${version}.tar.gz"
+          ];
+          hash = "sha256-s6JN6XqP28g1uYMxaVAQMLiXcDG8tUs7OsE3QPhGqzA=";
 
-    # base
-    gawk
-    gnumake # Necessary for emacs' vterm
-    libtool # Necessary for emacs' vterm
-    gnused # The one and only sed
-    wget # fetch stuff
-    ps # processes
-    killall # kill all the processes by name
-    screen # ssh in and out of a server
-    lsof # Files and their processes
+        };
+    }));
+  in
+    with pkgs; [
 
-    # faster/better X
-    ripgrep # faster grep in rust
-    fd # faster find
-    difftastic # better diffs
-    dua # better du
-    dust # interactive du in tust
-    bottom # network top
+      # base
+      gawk
+      gnumake # Necessary for emacs' vterm
+      libtool # Necessary for emacs' vterm
+      gnused # The one and only sed
+      wget # fetch stuff
+      ps # processes
+      killall # kill all the processes by name
+      screen # ssh in and out of a server
+      lsof # Files and their processes
 
-    # langs
-    cargo # rust packages
-    rustc # rust compiler
-    cmake # c compiler
-    clang # c language
-    clang-tools # tools for c language
+      # faster/better X
+      ripgrep # faster grep in rust
+      fd # faster find
+      difftastic # better diffs
+      dua # better du
+      dust # interactive du in tust
+      bottom # network top
 
-    # files
-    gnutar # The one and only tar
-    rsync # sync data
-    atuin # shared command history
-    zip
-    unzip # extract zips
+      # langs
+      cargo # rust packages
+      rustc # rust compiler
+      cmake # c compiler
+      clang # c language
+      clang-tools # tools for c language
 
-    # terminals
-    wezterm
-    kitty
-    fish
-    fishPlugins.async-prompt
-    fishPlugins.pure
-    fishPlugins.autopair
+      # files
+      gnutar # The one and only tar
+      rsync # sync data
+      atuin # shared command history
+      zip
+      unzip # extract zips
 
-    # fonts
-    nerdfonts # nice fonts, used in doom emacs
-    emacs-all-the-icons-fonts
+      # terminals
+      wezterm
+      kitty
+      fish
+      fishPlugins.async-prompt
+      fishPlugins.pure
+      fishPlugins.autopair
 
-    # monitor
-    nvitop # top for gpus (prefered)
-    nvtopPackages.full # another top for gpus
-    btop # nicer btop
+      # fonts
+      nerdfonts # nice fonts, used in doom emacs
+      emacs-all-the-icons-fonts
 
-    # python
-    python310 # the standard python
-    poetry # python package management
+      # monitor
+      nvitop # top for gpus (prefered)
+      nvtopPackages.full # another top for gpus
+      btop # nicer btop
 
-    # containers
-    podman  # for container needs
+      # python
+      python310 # the standard python
+      poetry # python package management
 
-    # writing
-    texliveFull # all the stuff for tex writing  # TODO try to reduce footprint
-    (aspellWithDicts (dicts: with dicts; [ en en-computers en-science ]))
-    pandoc
+      # containers
+      podman  # for container needs
 
-    # convenience
-    gnuplot # no-fuss plotting
-    bc # calculator
-    fzf # fuzzy finder
-    jq # process json
-    mermaid-cli # text to diagrams
-    parallel # make use of threads on shells
-    tldr # quick explanations
+      # writing
+      texliveFull # all the stuff for tex writing  # TODO try to reduce footprint
+      (aspellWithDicts (dicts: with dicts; [ en en-computers en-science ]))
+      pandoc
 
-    # media
-    mpv # video player
-    ffmpeg # video processing needs
-    imagemagick # image processing
-    graphicsmagick # imagemagick (+speed, -features) alternative
+      # convenience
+      gnuplot # no-fuss plotting
+      bc # calculator
+      fzf # fuzzy finder
+      jq # process json
+      mermaid-cli # text to diagrams
+      parallel # make use of threads on shells
+      tldr # quick explanations
 
-    # nix
-    nix-index # locate packages that provide a certain file
-    nix-search-cli # find nix packages
-    nixfmt-rfc-style
+      # media
+      mpv # video player
+      ffmpeg # video processing needs
+      imagemagick # image processing
+      graphicsmagick # imagemagick (+speed, -features) alternative
 
-    # testing
-    luajitPackages.fennel # lua in fennel
-    monolith # download whole html websites
-    xclip # clipboard manipulation tool
-    magic-wormhole # easy ftp sharing
+      # nix
+      nix-index # locate packages that provide a certain file
+      nix-search-cli # find nix packages
+      nixfmt-rfc-style
 
-    # AI
-    openai-whisper-cpp
-    ollama
-    piper-tts
+      # testing
+      luajitPackages.fennel # lua in fennel
+      monolith # download whole html websites
+      xclip # clipboard manipulation tool
+      magic-wormhole # easy ftp sharing
 
-    # LSP
-    nil
+      # AI
+      openai-whisper-cpp
+      ollama
+      piper-tts
 
-    # docs
-    pdftk
+      # LSP
+      nil
+      yaml-language-server
+      semgrep
+      nodePackages.bash-language-server
+      pyright
+      lemminx
 
-    # specific needs
-    haskellPackages.xml-to-json-fast
-];
+      # docs
+      pdftk
+      (gnumeric.overrideAttrs(p: { buildInputs = p.buildInputs ++ [ zlib12 ]; }))
 
-  programs.git = {
-    enable = true;
-    userName = "Alan Munoz";
-    userEmail = "afer.mg@gmail.com";
-    #extraConfig = {
-        # Sign all commits using ssh key
-    #    commit.gpgsign = true;
-    #    gpg.format = "ssh";
-    #    gpg.ssh.allowedSignersFile = "~/.ssh/allowed_signers";
-    #    user.signingkey = "~/.ssh/id_ed25519.pub";
-    #  };
-  };
+      # specific needs
+      haskellPackages.xml-to-json-fast
+    ];
 
-  programs.direnv = {
-    enable = true;
-    nix-direnv.enable = true;
-  };
+    programs.git = {
+      enable = true;
+      userName = "Alan Munoz";
+      userEmail = "afer.mg@gmail.com";
+      #extraConfig = {
+      # Sign all commits using ssh key
+      #    commit.gpgsign = true;
+      #    gpg.format = "ssh";
+      #    gpg.ssh.allowedSignersFile = "~/.ssh/allowed_signers";
+      #    user.signingkey = "~/.ssh/id_ed25519.pub";
+      #  };
+    };
 
-   xdg = {
-       enable = true;
-       configFile."doom"= {
-     	source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/clouds/homes/amunoz/config/doom";
+    programs.direnv = {
+      enable = true;
+      nix-direnv.enable = true;
+    };
+
+    xdg = {
+      enable = true;
+      configFile."doom"= {
+     	  source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/clouds/homes/amunoz/config/doom";
         recursive = true;
-   };
-       configFile."pypoetry"= {
-     	source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/clouds/homes/amunoz/config/pypoetry";
+      };
+      configFile."pypoetry"= {
+     	  source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/clouds/homes/amunoz/config/pypoetry";
         recursive = true;
-   };
-   #     configFile."ipython"= {
-   #   	source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/clouds/homes/amunoz/config/ipython";
-   #      recursive = true;
-   # };
-   };
+      };
+      #     configFile."ipython"= {
+      #   	source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/clouds/homes/amunoz/config/ipython";
+      #      recursive = true;
+      # };
+    };
 }
