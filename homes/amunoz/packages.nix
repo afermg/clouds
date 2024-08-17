@@ -27,6 +27,11 @@
       killall # kill all the processes by name
       screen # ssh in and out of a server
       lsof # Files and their processes
+      moreutils # e.g. sponge
+
+      # To support pdbpp in emacs
+      autoconf
+      automake
 
       # faster/better X
       ripgrep # faster grep in rust
@@ -61,6 +66,7 @@
       # fonts
       nerdfonts # nice fonts, used in doom emacs
       emacs-all-the-icons-fonts
+      fontconfig # Needed for napari
 
       # monitor
       nvitop # top for gpus (prefered)
@@ -85,7 +91,6 @@
       fzf # fuzzy finder
       jq # process json
       mermaid-cli # text to diagrams
-      parallel # make use of threads on shells
       tldr # quick explanations
 
       # media
@@ -107,7 +112,6 @@
 
       # AI
       openai-whisper-cpp
-      ollama
       piper-tts
 
       # LSP
@@ -115,7 +119,7 @@
       yaml-language-server
       semgrep
       nodePackages.bash-language-server
-      pyright
+      # pyright
       lemminx
 
       # docs
@@ -124,6 +128,8 @@
 
       # specific needs
       haskellPackages.xml-to-json-fast
+
+
     ];
 
     programs.git = {

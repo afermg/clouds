@@ -70,7 +70,13 @@
     #];
 
   };
-
+  
+  # Ollama service
+  services.ollama = {
+    enable = true;
+    acceleration = "cuda";
+  };
+    
   nixpkgs = {
     # You can add overlays here
     overlays = builtins.attrValues outputs.overlays;
