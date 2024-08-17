@@ -4,7 +4,7 @@
   inputs = {
     # Nixpkgs
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
-    # nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     # nixos-nvidia-vgpu = {
     #   url = "github:Yeshey/nixos-nvidia-vgpu/535.129";
     #   # inputs.nixpkgs.follows = "nixpkgs"; # doesn't work with latest nixpkgs rn
