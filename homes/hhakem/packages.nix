@@ -11,8 +11,11 @@
     wget # fetch stuff
     killall # kill all the processes by name
     screen # ssh in and out of a server
+    nvtopPackages.full
+    lsof
 
     python310 # the standard python
+    pyright
 ];
   programs.git = {
     enable = true;
@@ -56,3 +59,4 @@
     enableZshIntegration = true;
   };
 }
+

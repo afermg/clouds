@@ -113,6 +113,7 @@
       # AI
       openai-whisper-cpp
       piper-tts
+      pkgs.unstable.ollama
 
       # LSP
       nil
