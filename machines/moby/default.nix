@@ -14,7 +14,6 @@
     inputs.hardware.nixosModules.common-pc-ssd
     inputs.home-manager.nixosModule
     inputs.nix-ld.nixosModules.nix-ld
-    # outputs.nixosModules.sunshine
     # Import your generated (nixos-generate-config) hardware configuration
 
     # Disko configuration
@@ -149,7 +148,19 @@
   networking.hostId = "5a08e8de";
   # networking.bridges.br0.interfaces = [ "enp2s0" "wlp131s0" ];
   services.tailscale.enable = true;
-  services.syncthing.enable = true;
+  services.syncthing = {
+    enable = true;
+    user = "syncthing";
+    dataDir = "/home/amunoz/Documents/sync";
+    overrideDevices = true;     # overrides any devices added or deleted through the WebUI
+    #overrideFolders = true;     # overrides any folders added or deleted through the WebUI
+    settings = {
+      devices = {
+        "broad" = { id = "CD7FTGY-ERFLZFS-FBW4K5L-TPW3IQ4-TZ36LIC-AUO3IGE-66LGSRI-5DTEBAG"; };
+        "main" = { id = "TKXRRWK-K5EDNVM-AVXZKCP-TE2M2LC-A7CYJB7-LY2G5MU-EYGHIZC-I6GMRAR"; };
+      };
+      };
+  };
 
   services.emacs = {
     enable = true;
@@ -189,7 +200,7 @@
       ../../homes/hhakem/id_rsa.pub
     ];
   };
-
+  
   # Enable home-manager for users
   home-manager.useGlobalPkgs = true;
   home-manager.useUserPackages = true;
